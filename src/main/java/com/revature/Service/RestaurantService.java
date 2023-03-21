@@ -11,9 +11,10 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@Transactional
+
 public class RestaurantService {
     RestaurantRepository restaurantRepository;
+    UserService userService;
 
     @Autowired
     public RestaurantService(RestaurantRepository restaurantRepository){
@@ -25,11 +26,16 @@ public class RestaurantService {
      * @param restaurant
      * @return
      */
-   public Restaurant createRestaurant(Restaurant restaurant){
-        Restaurant newRestaurant = new  Restaurant(restaurant.getRestaurantId(), restaurant.getRestaurantName(),
-                restaurant.getRestaurantAddress(), restaurant.getRestaurantPhone(), restaurant.getHoursOfOperation());
-        return restaurantRepository.save(restaurant);
+   public Restaurant createRestaurant(String username, String password, Restaurant restaurant){
+     boolean userAuthenticated = userService.userAuthenticate(username, password);
+     if(!userAuthenticated){
+         return null;
+     }
+     Restaurant newRestaurant = restaurantRepository.save(restaurant);
+     return newRestaurant;
+
    }
+
 
     /**
      * get all restaurant
@@ -69,6 +75,9 @@ public class RestaurantService {
     }
 
 
+    public List<Restaurant> getRestaurantByAddress(String address) {
+        return restaurantRepository.findRestaurantByAddress(address);
+    }
 
 
 }
