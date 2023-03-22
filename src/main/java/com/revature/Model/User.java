@@ -1,9 +1,11 @@
 package com.revature.Model;
 
 import jakarta.persistence.*;
+import lombok.*;
 
 @MappedSuperclass
-public class User {
+@Data
+public abstract class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
