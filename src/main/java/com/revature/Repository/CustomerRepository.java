@@ -1,2 +1,7 @@
-package com.revature.Repository;public interface CustomerRepository {
+package com.revature.Repository;
+
+import com.revature.Model.Customer;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface CustomerRepository extends JpaRepository<Customer, Long> {
 }
