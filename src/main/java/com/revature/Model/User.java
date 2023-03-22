@@ -1,16 +1,16 @@
 package com.revature.Model;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Data;
 
 @MappedSuperclass
 @Data
 public abstract class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	protected Long id;
+	@Column(unique = true)
+	protected String username;
 	@Column
-	private String username;
-	@Column
-	private String passwd;
+	protected String passwd;
 }

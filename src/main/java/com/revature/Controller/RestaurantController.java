@@ -1,22 +1,18 @@
 package com.revature.Controller;
 import com.revature.Model.Restaurant;
-import com.revature.Service.ReservationService;
 import com.revature.Service.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.nio.file.Path;
 import java.util.List;
 
 @RestController
 public class RestaurantController {
 
-    RestaurantService reservationService;
-
+    RestaurantService restaurantService;
 
     @Autowired
     public RestaurantController(RestaurantService restaurantService){
-        this.reservationService = restaurantService;
+        this.restaurantService = restaurantService;
     }
 
     /** 1. as a restaurant, I want to add/create restaurant
@@ -39,36 +35,33 @@ public class RestaurantController {
      * @param restaurant
      * @return
      */
-    @PostMapping("restaurant")
-    public Restaurant postRestaurant(@RequestBody Restaurant restaurant, @RequestParam String username,
-                                     @RequestParam String password){
-       Restaurant newRestaurant = reservationService.createRestaurant(username, password, restaurant);
-
-       return newRestaurant;
+    @PostMapping("restaurant/register")
+    public Restaurant newRestaurant(@RequestBody Restaurant restaurant){
+       return restaurantService.createRestaurant(restaurant);
     }
 
     /**
      * GET localhost:9000/restaurant
      */
-    @GetMapping("restaurant")
-    public List<Restaurant> getAllRestaurant(){
-        return reservationService.getAllRestaurant();
+    @GetMapping("restaurants")
+    public List<Restaurant> getAllRestaurants(){
+        return restaurantService.getAllRestaurants();
     }
 
     /**
      * GET localhost:9000/restaurant/{name}
      */
     @GetMapping("restaurant/{name}")
-    public List<Restaurant> getRestaurantByName(@PathVariable String name){
-        return reservationService.getRestaurantByName(name);
+    public List<Restaurant> getRestaurantsByName(@PathVariable String name){
+        return restaurantService.getRestaurantsByName(name);
     }
 
     /**
      * GET localhost:9000/restaurant/{address}
      */
     @GetMapping("restaurant/{address}")
-    public List<Restaurant>  getRestaurantByAddress(@PathVariable String address){
-        return reservationService.getRestaurantByAddress(address);
+    public List<Restaurant>  getRestaurantsByAddress(@PathVariable String address){
+        return restaurantService.getRestaurantsByAddress(address);
     }
     /**
      * DELETE localhost:9000/restaurant/{id}
@@ -76,7 +69,7 @@ public class RestaurantController {
 
     @DeleteMapping("restaurant/{id}")
     public Restaurant deleteRestaurantById(@PathVariable long id){
-        return reservationService.deleteRestaurantById(id);
+        return restaurantService.deleteRestaurantById(id);
     }
 
     /**
@@ -85,7 +78,6 @@ public class RestaurantController {
 
     @PatchMapping("restaurant/{id}")
     public Restaurant updateRestaurant(@PathVariable long id, @RequestBody Restaurant restaurant){
-        return reservationService.updateRestaurantById(id, restaurant);
+        return restaurantService.updateRestaurantById(id, restaurant);
     }
-
 }
