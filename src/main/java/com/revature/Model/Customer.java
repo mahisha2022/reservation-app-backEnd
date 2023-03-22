@@ -12,6 +12,6 @@ import java.util.List;
 @NoArgsConstructor
 public class Customer extends User {
 	@OneToMany(fetch = FetchType.EAGER)
-	@JsonManagedReference
+	@JsonManagedReference(value = "customer-reservations")
 	private List<Reservation> reservations;
 }

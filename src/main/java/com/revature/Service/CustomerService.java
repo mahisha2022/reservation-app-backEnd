@@ -24,7 +24,11 @@ public class CustomerService {
 		return customerRepository.save(customer);
 	}
 
-	public List<Reservation> getReservations() {
-		return reservationRepository.findAll();
+	public Customer login(Customer customer) {
+		return customerRepository.findByUsernameAndPasswd(customer.getUsername(), customer.getPasswd());
+	}
+
+	public List<Reservation> getReservations(long id) {
+		return reservationRepository.findAllByCustomer(id);
 	}
 }

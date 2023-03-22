@@ -13,31 +13,19 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 
-public class Restaurant {
-
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long restaurantId;
+public class Restaurant extends User {
     @Column
-    private String restaurantName;
+    private String name;
     @Column
-    private  String restaurantAddress;
+    private String address;
     @Column
-    private  String restaurantPhone;
+    private String phone;
     @Column
-    private String hoursOfOperation;
+    private int hoursOfOperation;
     @Column
-    private String totalSeats;
-
+    private int totalSeats;
 
     @OneToMany(fetch =  FetchType.EAGER)
-    @JsonManagedReference
+    @JsonManagedReference(value = "restaurant-reservations")
     private List<Reservation> reservations;
-
-    public Restaurant(Long restaurantId, String restaurantName,
-                      String restaurantAddress, String restaurantPhone, String hoursOfOperation) {
-    }
 }
-
-
