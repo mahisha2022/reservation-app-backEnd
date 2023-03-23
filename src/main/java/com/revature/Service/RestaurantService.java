@@ -1,6 +1,6 @@
 package com.revature.Service;
 
-import com.revature.Model.Restaurant;
+import com.revature.Model.*;
 import com.revature.Repository.RestaurantRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +32,10 @@ public class RestaurantService {
      */
     public List<Restaurant> getAllRestaurants(){
         return restaurantRepository.findAll();
+    }
+
+    public List<Reservation> getReservations(long id){
+        return restaurantRepository.findById(id).get().getReservations();
     }
 
     /**

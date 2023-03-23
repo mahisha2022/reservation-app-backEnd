@@ -29,6 +29,6 @@ public class CustomerService {
 	}
 
 	public List<Reservation> getReservations(long id) {
-		return reservationRepository.findAllByCustomer(id);
+		return customerRepository.findById(id).get().getReservations();
 	}
 }

@@ -1,5 +1,5 @@
 package com.revature.Controller;
-import com.revature.Model.Restaurant;
+import com.revature.Model.*;
 import com.revature.Service.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -46,6 +46,11 @@ public class RestaurantController {
     @GetMapping("restaurants")
     public List<Restaurant> getAllRestaurants(){
         return restaurantService.getAllRestaurants();
+    }
+
+    @GetMapping("restaurant/{id}/reservations")
+    public List<Reservation> getReservations(@PathVariable long id){
+        return restaurantService.getReservations(id);
     }
 
     /**
