@@ -28,4 +28,12 @@ public class ReservationService {
 		c.getReservations().add(reservation);
 		return reservationRepository.save(reservation);
 	}
+
+	public List<Reservation> getCustomerReservations(long customer_id) {
+		return reservationRepository.findAllByCustomer(customer_id);
+	}
+
+	public List<Reservation> getRestaurantReservations(long restaurant_id) {
+		return reservationRepository.findAllByRestaurant(restaurant_id);
+	}
 }
