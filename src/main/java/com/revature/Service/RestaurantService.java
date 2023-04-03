@@ -76,4 +76,13 @@ public class RestaurantService {
     public Optional<Restaurant> getRestaurantById(long id){
         return restaurantRepository.findById(id);
     }
+
+
+    public  Restaurant restaurantLogin(String username, String password){
+        Restaurant user = restaurantRepository.findByUsernameAndPasswd(username, password);
+        if (user == null){
+            return  null;
+        }
+        return user;
+    }
 }

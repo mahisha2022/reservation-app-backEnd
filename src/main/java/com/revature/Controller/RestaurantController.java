@@ -92,4 +92,9 @@ public class RestaurantController {
     public Optional<Restaurant> getRestaurantById(@PathVariable long id){
         return restaurantService.getRestaurantById(id);
     }
+
+    @PostMapping("restaurant/login")
+    public Restaurant restaurantLogin(@RequestBody Restaurant restaurant){
+        return restaurantService.restaurantLogin(restaurant.getUsername(), restaurant.getPasswd());
+    }
 }
