@@ -21,7 +21,7 @@ public class Restaurant extends User {
     @Column
     private String phone;
     @Column
-    private int hoursOfOperation;
+    private String hoursOfOperation;
     @Column
     private int totalSeats;
 
