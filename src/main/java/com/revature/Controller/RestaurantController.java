@@ -1,7 +1,10 @@
 package com.revature.Controller;
+import com.revature.Exceptions.InvalidInputException;
 import com.revature.Model.*;
 import com.revature.Service.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
@@ -94,7 +97,14 @@ public class RestaurantController {
     }
 
     @PostMapping("restaurant/login")
-    public Restaurant restaurantLogin(@RequestBody Restaurant restaurant){
-        return restaurantService.restaurantLogin(restaurant.getUsername(), restaurant.getPasswd());
+    public ResponseEntity<?> restaurantLogin(@RequestBody Restaurant restaurant) throws InvalidInputException {
+
+        try {
+            Restaurant restaurant1 = restaurantService.restaurantLogin(restaurant.getUsername(), restaurant.getPasswd());
+            return  ResponseEntity.ok(restaurant1);
+        } catch (InvalidInputException e){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid password or username");
+        }
+
     }
 }

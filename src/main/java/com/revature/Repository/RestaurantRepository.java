@@ -10,5 +10,8 @@ public interface RestaurantRepository  extends JpaRepository<Restaurant, Long> {
     List<Restaurant> findAllByAddress(String restaurantAddress);
 //    Restaurant deleteRestaurantById(Long restaurantID);
 
-    Restaurant findByUsernameAndPasswd(String username, String passwd);
+  Restaurant findByUsernameAndPasswd(String username, String passwd);
+
+
+
 }

@@ -7,6 +7,7 @@ import jakarta.transaction.Transactional;
 import com.revature.Repository.*;
 import com.revature.Model.*;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -30,5 +31,9 @@ public class CustomerService {
 
 	public List<Reservation> getReservations(long id) {
 		return customerRepository.findById(id).get().getReservations();
+	}
+
+	public Optional<Customer> getCustomerById(Long customerId) {
+		return customerRepository.findById(customerId);
 	}
 }

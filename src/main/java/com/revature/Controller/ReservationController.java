@@ -1,7 +1,9 @@
 package com.revature.Controller;
 
 import com.revature.Model.*;
+import com.revature.Service.CustomerService;
 import com.revature.Service.ReservationService;
+import com.revature.Service.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,10 +16,15 @@ import java.util.Optional;
 @CrossOrigin(origins = {"http://localhost:4200", "http://localhost:3000"}, allowCredentials = "true")
 public class ReservationController {
 	ReservationService reservationService;
+	RestaurantService restaurantService;
+	CustomerService customerService;
 
 	@Autowired
-	public ReservationController(ReservationService reservationService) {
+	public ReservationController(ReservationService reservationService, RestaurantService restaurantService, CustomerService customerService) {
+
 		this.reservationService = reservationService;
+		this.restaurantService =restaurantService;
+		this.customerService = customerService;
 	}
 
 	/**
@@ -73,10 +80,14 @@ public class ReservationController {
 	 */
 
 	@GetMapping("/reservations/customer/{customerId}")
-	public List<Reservation> getCustomerReservation(@PathVariable Long customerId){
-		Customer customer = new Customer();
-		customer.setId(customerId);
-		return reservationService.getCustomerReservations(customer);
+	public ResponseEntity<List<Reservation>> getCustomerReservation(@PathVariable Long customerId){
+
+		Optional<Customer> optionalCustomer = customerService.getCustomerById(customerId);
+		if(optionalCustomer.isEmpty()){
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		}
+		List<Reservation> reservations = reservationService.getCustomerReservations(optionalCustomer.get());
+		return ResponseEntity.ok().body(reservations);
 	}
 
 	/**
@@ -98,10 +109,13 @@ public class ReservationController {
 
 
 	@GetMapping ("/reservations/restaurant/{restaurantId}")
-	public List<Reservation> getRestaurantReservation(@PathVariable Long restaurantId){
-		Restaurant restaurant = new Restaurant();
-		restaurant.setId(restaurantId);
-		return reservationService.getReservationByRestaurant(restaurant);
+	public ResponseEntity<List<Reservation>> getRestaurantReservation(@PathVariable Long restaurantId){
+		Optional<Restaurant> optionalRestaurant = restaurantService.getRestaurantById(restaurantId);
+		if(optionalRestaurant.isEmpty()){
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		}
+		List<Reservation> reservations = reservationService.getReservationByRestaurant(optionalRestaurant.get());
+		return ResponseEntity.ok().body(reservations);
 	}
 
 	/**
