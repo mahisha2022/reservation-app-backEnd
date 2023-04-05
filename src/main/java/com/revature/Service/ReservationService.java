@@ -6,6 +6,7 @@ import com.revature.Model.*;
 import com.revature.Repository.*;
 import jakarta.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -21,19 +22,30 @@ public class ReservationService {
 		this.customerRepository = customerRepository;
 	}
 
-	public Reservation registerReservation(long restaurant_id, long customer_id, Reservation reservation) {
+	public Reservation registerReservation( Reservation reservation, long customer_id, long restaurant_id ) {
 		Restaurant r = restaurantRepository.findById(restaurant_id).get();
 		Customer c = customerRepository.findById(customer_id).get();
-		r.getReservations().add(reservation);
-		c.getReservations().add(reservation);
-		return reservationRepository.save(reservation);
+		reservation.setCustomer(c);
+		reservation.setRestaurant(r);
+		Reservation newReservation = reservationRepository.save(reservation);
+		newReservation.setCustomerId(customer_id);
+		newReservation.setRestaurantId(restaurant_id);
+		return newReservation;
 	}
 
-	public List<Reservation> getCustomerReservations(long customer_id) {
-		return reservationRepository.findAllByCustomer(customer_id);
+	public List<Reservation> getCustomerReservations(Customer customer) {
+		return reservationRepository.findAllByCustomer(customer);
 	}
 
-	public List<Reservation> getRestaurantReservations(long restaurant_id) {
-		return reservationRepository.findAllByRestaurant(restaurant_id);
+	public List<Reservation> getReservationByRestaurant(Restaurant restaurant){
+		return reservationRepository.findAllByRestaurant(restaurant);
+	}
+
+
+	public Reservation deleteReservation(Long reservationId){
+		Optional<Reservation> reservationOptional = reservationRepository.findById(reservationId);
+		Reservation reservation = reservationOptional.get();
+		reservationRepository.delete(reservation);
+		return reservation;
 	}
 }

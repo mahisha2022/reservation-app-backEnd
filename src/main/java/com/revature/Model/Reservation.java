@@ -3,6 +3,9 @@ package com.revature.Model;
 import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.time.LocalTime;
 import java.util.Date;
 
 @Entity
@@ -16,11 +19,21 @@ public class Reservation {
 	private long id;
 
 	@Column
-	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
-	private Date reservation_time;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
+	private Date reservationDate;
+
+	@Column
+//	@DateTimeFormat(pattern = "HH:mm:ss")
+	private String reservationTime;
 
 	@Column
 	private int seats;
+
+	@Column
+	private String name;
+
+	@Column
+	private String contactInfo;
 
 	@Column
 	private String special_accommodations;
@@ -34,4 +47,10 @@ public class Reservation {
 	@JsonBackReference(value = "customer-reservations")
 	@JoinColumn(name = "customer_id")
 	private Customer customer;
+
+	@Column(name= "customer_id", insertable = false, updatable = false)
+	private long customerId;
+
+	@Column(name = "restaurant_id", insertable = false, updatable = false)
+	private long restaurantId;
 }
