@@ -15,6 +15,10 @@ import java.util.List;
 @NoArgsConstructor
 
 public class Restaurant extends User {
+
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private Long restaurantID;
     @Column
     private String name;
     @Column

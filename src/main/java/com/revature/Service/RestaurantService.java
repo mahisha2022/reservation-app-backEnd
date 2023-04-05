@@ -1,5 +1,6 @@
 package com.revature.Service;
 
+import com.revature.Exceptions.InvalidInputException;
 import com.revature.Model.*;
 import com.revature.Repository.RestaurantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,11 +79,17 @@ public class RestaurantService {
     }
 
 
-    public  Restaurant restaurantLogin(String username, String password){
+    public  Restaurant restaurantLogin(String username, String password) throws InvalidInputException {
         Restaurant user = restaurantRepository.findByUsernameAndPasswd(username, password);
         if (user == null){
-            return  null;
+           throw new InvalidInputException();
         }
+        user.setUsername(username);
+        user.setPasswd(password);
         return user;
     }
+
+
+
+
 }
