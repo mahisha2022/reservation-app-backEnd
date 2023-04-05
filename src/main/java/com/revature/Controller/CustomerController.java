@@ -26,7 +26,7 @@ public class CustomerController {
 		return customerService.newCustomer(customer);
 	}
 
-	@GetMapping("customer/login")
+	@PostMapping("customer/login")
 	public Customer loginCustomer(@RequestBody Customer customer) {
 		return customerService.login(customer);
 	}

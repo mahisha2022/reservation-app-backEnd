@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -21,11 +22,11 @@ public class Restaurant extends User {
     @Column
     private String phone;
     @Column
-    private int hoursOfOperation;
+    private String hoursOfOperation;
     @Column
     private int totalSeats;
 
-    @OneToMany(fetch =  FetchType.EAGER)
+    @OneToMany(mappedBy = "restaurant", fetch =  FetchType.EAGER )
     @JsonManagedReference(value = "restaurant-reservations")
     private List<Reservation> reservations;
 }

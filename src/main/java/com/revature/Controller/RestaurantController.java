@@ -4,6 +4,7 @@ import com.revature.Service.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = {"http://localhost:4200", "http://localhost:3000"}, allowCredentials = "true")
@@ -57,7 +58,7 @@ public class RestaurantController {
     /**
      * GET localhost:9000/restaurant/{name}
      */
-    @GetMapping("restaurant/{name}")
+    @GetMapping("restaurant/name/{name}")
     public List<Restaurant> getRestaurantsByName(@PathVariable String name){
         return restaurantService.getRestaurantsByName(name);
     }
@@ -65,7 +66,7 @@ public class RestaurantController {
     /**
      * GET localhost:9000/restaurant/{address}
      */
-    @GetMapping("restaurant/{address}")
+    @GetMapping("restaurant/address/{address}")
     public List<Restaurant>  getRestaurantsByAddress(@PathVariable String address){
         return restaurantService.getRestaurantsByAddress(address);
     }
@@ -85,5 +86,15 @@ public class RestaurantController {
     @PatchMapping("restaurant/{id}")
     public Restaurant updateRestaurant(@PathVariable long id, @RequestBody Restaurant restaurant){
         return restaurantService.updateRestaurantById(id, restaurant);
+    }
+
+    @GetMapping("restaurant/{id}")
+    public Optional<Restaurant> getRestaurantById(@PathVariable long id){
+        return restaurantService.getRestaurantById(id);
+    }
+
+    @PostMapping("restaurant/login")
+    public Restaurant restaurantLogin(@RequestBody Restaurant restaurant){
+        return restaurantService.restaurantLogin(restaurant.getUsername(), restaurant.getPasswd());
     }
 }
